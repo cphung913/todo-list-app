@@ -1,5 +1,42 @@
 function AddButton() {
-    return <button className="bg-blue-500 text-white p-2 rounded absolute right-4 bottom-4" onClick={() => console.log("Click")}>Add Task</button>;
+    return (
+        <>
+        <button className="bg-blue-500 text-white p-2 rounded absolute right-4 bottom-4" onClick={viewPopup}>Add Task</button>
+        <div className="screen absolute inset-0 bg-gray-500 opacity-0 pointer-events-none duration-300"></div>
+        <div className="popup fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-lg scale-0 duration-300">
+            <h2 className="text-2xl mb-4">Add New Task</h2>
+            <input type="text" className="input border border-gray-300 p-2 w-full mb-4" placeholder="Task Name" />
+            <div className="flex justify-end">
+                <button className="bg-gray-300 text-black p-2 rounded mr-2" onClick={closePopup}>Cancel</button>
+                <button className="bg-blue-500 text-white p-2 rounded">Add</button>
+            </div>
+        </div>
+        </>
+    );
+}
+
+const viewPopup = () => {
+    const screen = document.querySelector('.screen') as HTMLElement;
+    const popup = document.querySelector('.popup') as HTMLElement;
+    popup.classList.add('scale-100');
+    popup.classList.remove('scale-0');
+    screen.classList.remove('opacity-0');
+    screen.classList.add('opacity-50');
+    screen.classList.remove('pointer-events-none');
+    screen.addEventListener('click', closePopup);
+}
+
+const closePopup = () => {
+    const screen = document.querySelector('.screen') as HTMLElement;
+    const popup = document.querySelector('.popup') as HTMLElement;
+    const input = document.querySelector('input') as HTMLInputElement;
+    input.value = "";
+    popup.classList.remove('scale-100');
+    popup.classList.add('scale-0');
+    screen.classList.add('opacity-0');
+    screen.classList.remove('opacity-50');
+    screen.classList.add('pointer-events-none');
+    screen.removeEventListener('click', closePopup);
 }
 
 export default AddButton;
