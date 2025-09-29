@@ -1,3 +1,5 @@
+import { addTask } from "./TaskList";
+
 function AddButton() {
     return (
         <>
@@ -8,7 +10,7 @@ function AddButton() {
             <input type="text" className="input border border-gray-300 p-2 w-full mb-4" placeholder="Task Name" />
             <div className="flex justify-end">
                 <button className="bg-gray-300 text-black p-2 rounded mr-2" onClick={closePopup}>Cancel</button>
-                <button className="bg-blue-500 text-white p-2 rounded">Add</button>
+                <button className="bg-blue-500 text-white p-2 rounded" onClick={setupTask}>Add</button>
             </div>
         </div>
         </>
@@ -37,6 +39,18 @@ const closePopup = () => {
     screen.classList.remove('opacity-50');
     screen.classList.add('pointer-events-none');
     screen.removeEventListener('click', closePopup);
+}
+
+const setupTask = () => {
+    const input = document.querySelector('.input') as HTMLInputElement;
+    const task = input.value.trim();
+    if (task !== "") {
+        addTask(task);
+        closePopup();
+        return;
+    }
+    alert("Task name cannot be empty");
+    return;
 }
 
 export default AddButton;
