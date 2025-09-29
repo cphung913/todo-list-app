@@ -1,4 +1,4 @@
-let taskList: [string, string, string] = ["Task 1", "Task 2", "Task 3"];
+let taskList: Array<string> = ["Task 1", "Task 2", "Task 3"];
 
 function TaskList() {
     return (
@@ -9,6 +9,11 @@ function TaskList() {
         </div>
        ))}
     </div>);
+}
+
+export function addTask(task: string) {
+    taskList.push(task);
+    window.location.reload();
 }
 
 export default TaskList;
