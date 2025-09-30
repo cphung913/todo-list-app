@@ -3,14 +3,14 @@ import { addTask } from "./TaskList";
 function AddButton() {
     return (
         <>
-        <button className="bg-blue-500 text-white p-2 rounded absolute right-4 bottom-4" onClick={viewPopup}>Add Task</button>
+        <button className="bg-blue-500 text-white p-2 rounded absolute right-4 bottom-4 cursor-pointer" onClick={viewPopup}>Add Task</button>
         <div className="screen absolute inset-0 bg-gray-500 opacity-0 pointer-events-none duration-300"></div>
         <div className="popup fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded shadow-lg scale-0 duration-300">
             <h2 className="text-2xl mb-4">Add New Task</h2>
             <input type="text" className="input border border-gray-300 p-2 w-full mb-4" placeholder="Task Name" />
             <div className="flex justify-end">
-                <button className="bg-gray-300 text-black p-2 rounded mr-2" onClick={closePopup}>Cancel</button>
-                <button className="bg-blue-500 text-white p-2 rounded" onClick={setupTask}>Add</button>
+                <button className="bg-gray-300 text-black p-2 rounded mr-2 cursor-pointer" onClick={closePopup}>Cancel</button>
+                <button className="bg-blue-500 text-white p-2 rounded cursor-pointer" onClick={setupTask}>Add</button>
             </div>
         </div>
         </>
