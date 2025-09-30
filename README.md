@@ -1,6 +1,6 @@
 # todo-list-app
 
-A full-stack to-do list web app built with React/Next.js, TypeScript, Tailwind CSS, and deployed on Vercel.
+A full-stack to-do list web app built with React/Next.js, TypeScript, Tailwind CSS. Backend and hosting with Firebase.
 
 Users can add, delete, and mark tasks as complete.
 
@@ -12,9 +12,16 @@ Users can add, delete, and mark tasks as complete.
 
 ## Tech Stack
 
+### Frontend
 - React/Next.js + TypeScript
 - TailwindCSS
-- Vercel (deployment)
+
+### Backend
+- Firebase (Authentication, Firestore)
+
+### Deployment
+- Firebase Hosting
+
 
 ## Live Demo
 
