@@ -21,8 +21,3 @@ Users can add, delete, and mark tasks as complete.
 
 ### Deployment
 - Firebase Hosting
-
-
-## Live Demo
-
-[View on Vercel](https://your-app.vercel.app)
