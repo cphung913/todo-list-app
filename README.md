@@ -1,6 +1,6 @@
 # todo-list-app
 
-A full-stack to-do list web app built with React/Next.js, TypeScript, Tailwind CSS. Backend and hosting with Firebase.
+A full-stack to-do list web app built with React, TypeScript, Tailwind CSS. Backend and hosting with Firebase.
 
 Users can add, delete, and mark tasks as complete.
 
@@ -13,7 +13,7 @@ Users can add, delete, and mark tasks as complete.
 ## Tech Stack
 
 ### Frontend
-- React/Next.js + TypeScript
+- React + TypeScript
 - TailwindCSS
 
 ### Backend
