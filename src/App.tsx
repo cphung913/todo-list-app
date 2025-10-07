@@ -2,6 +2,7 @@ import { useState } from "react";
 import AddButton from "./components/AddButton";
 import TaskList from "./components/TaskList";
 import { Task } from "./components/Task";
+import Auth from "./components/Auth";
 
 function App() {
   const [taskList, setTaskList] = useState([
@@ -16,6 +17,7 @@ function App() {
     </div>
     <TaskList taskList={taskList} setTaskList={setTaskList}/>
     <AddButton setTaskList={setTaskList}/>
+    <Auth />
     </>
   );
 }

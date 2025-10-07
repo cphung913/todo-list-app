@@ -5,14 +5,17 @@ function AddButton({ setTaskList } : { setTaskList: React.Dispatch<React.SetStat
     const addTask = () => {
         const input = document.querySelector('.input') as HTMLInputElement;
         const task = input.value.trim();
+        if (task.length > 100) {
+            alert("Task name cannot exceed 100 characters");
+            return;
+        }
         if (task !== "") {
             const newTask = new Task(task);
-            setTaskList(prev => [...prev, newTask]);
+            setTaskList(prev => [newTask, ...prev]);
             closePopup();
             return;
         }
         alert("Task name cannot be empty");
-        
     }
 
     const closePopup = () => {
