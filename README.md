@@ -19,8 +19,5 @@ Users can add, delete, and mark tasks as complete.
 ### Backend
 - Firebase (Authentication, Firestore)
 
-### Deployment
-- Firebase Hosting
-
 ## Live Demo
 https://to-do-list-3af67.web.app/
