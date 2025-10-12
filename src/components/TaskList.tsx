@@ -1,4 +1,6 @@
 import { Task } from "./Task";
+import { auth, db } from '../firebaseConfig';
+import { deleteDoc, doc } from "firebase/firestore";
 import check from "../assets/check-solid-full.svg";
 import trash from "../assets/trash-solid-full.svg";
 
@@ -16,8 +18,22 @@ function TaskList({ taskList, setTaskList } : { taskList: Task[], setTaskList: R
         });
     }
 
-    const deleteTask = (index: number) => {
+    const deleteTask = async (index: number) => {
         setTaskList(prev => prev.filter((_, i) => i !== index));
+
+        try {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("No user signed in");
+                window.location.reload();
+                return;
+            }
+            const taskToDelete = taskList[index];
+            await deleteDoc(doc(db, "users", user.uid, "todos", taskToDelete.id));
+        } catch (error) {
+            alert("Error removing document: " + error);
+            window.location.reload();
+        }
     }
 
     return (

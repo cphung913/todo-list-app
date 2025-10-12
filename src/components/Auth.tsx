@@ -62,7 +62,6 @@ function Auth({ setTaskList } : { setTaskList: React.Dispatch<React.SetStateActi
     const data: any[] = [];
     const querySnapshot = await getDocs(collection(db, "users", user.uid, "todos"));
     querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
       data.push({id: doc.id, ...doc.data()});
     });
     return data;
@@ -74,7 +73,7 @@ function Auth({ setTaskList } : { setTaskList: React.Dispatch<React.SetStateActi
         setTaskList([]);
         return;
       }
-      const tasks = rawData.map(item => new Task(item.text, item.completed));
+      const tasks = rawData.map(item => new Task(item.id, item.text, item.completed));
       setTaskList(tasks);
   }
 

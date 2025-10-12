@@ -5,7 +5,7 @@ import { Task } from "./components/Task";
 import Auth from "./components/Auth"
 
 function App() {
-  const [taskList, setTaskList] = useState([new Task("Sample Task 1"), new Task("Sample Task 2"), new Task("Sample Task 3", true)]);
+  const [taskList, setTaskList] = useState([new Task("", "Sample Task")]);
   
   return (
     <>

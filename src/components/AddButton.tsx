@@ -19,17 +19,16 @@ function AddButton({ setTaskList } : { setTaskList: React.Dispatch<React.SetStat
             return;
         }
         if (task !== "") {
-            const newTask = new Task(task);
-            setTaskList(prev => [newTask, ...prev]);
-            
             try {
                 const docRef = await addDoc(collection(db, "users", user.uid, "todos"), {
                     text: task,
                     completed: false
                 });
                 console.log("Document written with ID: ", docRef.id);
+                const newTask = new Task(docRef.id, task);
+                setTaskList(prev => [newTask, ...prev]);
             } catch (e) {
-                console.error("Error adding document: ", e);
+                console.error(e);
             }
 
             closePopup();
