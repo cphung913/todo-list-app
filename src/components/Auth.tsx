@@ -1,9 +1,11 @@
 import 'firebaseui/dist/firebaseui.css'
-import { auth } from '../firebaseConfig';
+import { auth, db } from '../firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
+import { collection, getDocs } from "firebase/firestore"; 
+import { Task } from './Task';
 
-function Auth() {
+function Auth({ setTaskList } : { setTaskList: React.Dispatch<React.SetStateAction<any[]>> }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,6 +14,7 @@ function Auth() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        console.log(user);
         const authContainer = document.getElementById('auth-container') as HTMLElement;
         const screen = document.querySelector('.auth-screen') as HTMLElement;
         authContainer.classList.remove('scale-100');
@@ -19,11 +22,12 @@ function Auth() {
         screen.classList.add('opacity-0');
         screen.classList.remove('opacity-30');
         screen.classList.add('pointer-events-none');
+
+        setTaskList([]);
       })
       .catch((error) => {
         const errorMessage = error.message;
         alert(errorMessage);
-        
       });
   }
 
@@ -31,6 +35,7 @@ function Auth() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user; 
+        console.log(user);
         const authContainer = document.getElementById('auth-container') as HTMLElement;
         const screen = document.querySelector('.auth-screen') as HTMLElement;
         authContainer.classList.remove('scale-100');
@@ -38,12 +43,39 @@ function Auth() {
         screen.classList.add('opacity-0');
         screen.classList.remove('opacity-30');
         screen.classList.add('pointer-events-none');
-        // load user data
+
+        fetchData();
       })
       .catch((error) => {
         const errorMessage = error.message;
         alert(errorMessage);
       });
+  }
+
+  const getData = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("No user signed in");
+      window.location.reload();
+      return;
+    }
+    const data: any[] = [];
+    const querySnapshot = await getDocs(collection(db, "users", user.uid, "todos"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+      data.push({id: doc.id, ...doc.data()});
+    });
+    return data;
+  }
+
+  const fetchData = async () => {
+      const rawData = await getData();
+      if (!rawData) {
+        setTaskList([]);
+        return;
+      }
+      const tasks = rawData.map(item => new Task(item.text, item.completed));
+      setTaskList(tasks);
   }
 
   return (<>

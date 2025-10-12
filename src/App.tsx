@@ -2,13 +2,10 @@ import { useState } from "react";
 import AddButton from "./components/AddButton";
 import TaskList from "./components/TaskList";
 import { Task } from "./components/Task";
-import Auth from "./components/Auth";
+import Auth from "./components/Auth"
 
 function App() {
-  const [taskList, setTaskList] = useState([
-        new Task("Sample Task 1"),
-        new Task("Sample Task 2", true)
-    ]);
+  const [taskList, setTaskList] = useState([new Task("Sample Task 1"), new Task("Sample Task 2"), new Task("Sample Task 3", true)]);
   
   return (
     <>
@@ -17,7 +14,7 @@ function App() {
     </div>
     <TaskList taskList={taskList} setTaskList={setTaskList}/>
     <AddButton setTaskList={setTaskList}/>
-    <Auth />
+    <Auth setTaskList={setTaskList}/>
     </>
   );
 }

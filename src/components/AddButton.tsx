@@ -1,8 +1,17 @@
 import { Task } from "./Task";
+import { collection, addDoc } from "firebase/firestore";    
+import { db, auth } from "../firebaseConfig";
 
 function AddButton({ setTaskList } : { setTaskList: React.Dispatch<React.SetStateAction<Task[]>> }) {
 
-    const addTask = () => {
+    const addTask = async () => {
+        const user = auth.currentUser;
+        if (!user) {
+            alert("No user signed in");
+            window.location.reload();
+            return;
+        }
+
         const input = document.querySelector('.input') as HTMLInputElement;
         const task = input.value.trim();
         if (task.length > 100) {
@@ -12,6 +21,17 @@ function AddButton({ setTaskList } : { setTaskList: React.Dispatch<React.SetStat
         if (task !== "") {
             const newTask = new Task(task);
             setTaskList(prev => [newTask, ...prev]);
+            
+            try {
+                const docRef = await addDoc(collection(db, "users", user.uid, "todos"), {
+                    text: task,
+                    completed: false
+                });
+                console.log("Document written with ID: ", docRef.id);
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+
             closePopup();
             return;
         }
