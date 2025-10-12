@@ -1,12 +1,12 @@
 import { Task } from "./Task";
 import { auth, db } from '../firebaseConfig';
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import check from "../assets/check-solid-full.svg";
 import trash from "../assets/trash-solid-full.svg";
 
 function TaskList({ taskList, setTaskList } : { taskList: Task[], setTaskList: React.Dispatch<React.SetStateAction<Task[]>> }) {
 
-    const completeTask = (index: number) => {
+    const completeTask = async (index: number) => {
         setTaskList(prevTasks => {
             const newTasks = [...prevTasks];
             const [task] = newTasks.splice(index, 1);
@@ -16,6 +16,24 @@ function TaskList({ taskList, setTaskList } : { taskList: Task[], setTaskList: R
 
             return newTasks;
         });
+
+        try {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("No user signed in");
+                window.location.reload();
+                return;
+            }
+            const taskToUpdate = taskList[index];
+            const docRef = doc(db, "users", user.uid, "todos", taskToUpdate.id);
+            await updateDoc(docRef, {
+                completed: !taskToUpdate.completed
+            });
+        }
+        catch (e) {
+            console.error(e);
+            window.location.reload();
+        }
     }
 
     const deleteTask = async (index: number) => {
@@ -30,8 +48,8 @@ function TaskList({ taskList, setTaskList } : { taskList: Task[], setTaskList: R
             }
             const taskToDelete = taskList[index];
             await deleteDoc(doc(db, "users", user.uid, "todos", taskToDelete.id));
-        } catch (error) {
-            alert("Error removing document: " + error);
+        } catch (e) {
+            console.error(e);
             window.location.reload();
         }
     }

@@ -74,6 +74,7 @@ function Auth({ setTaskList } : { setTaskList: React.Dispatch<React.SetStateActi
         return;
       }
       const tasks = rawData.map(item => new Task(item.id, item.text, item.completed));
+      tasks.sort((a, b) => Number(a.completed) - Number(b.completed));
       setTaskList(tasks);
   }
 
